@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import javax.swing.JOptionPane;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -31,7 +32,19 @@ public final class JavaPackagerPlugin implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             Runtime rt = Runtime.getRuntime();
-            Process pr = rt.exec("touch hola.txt");
+           
+            String SO = JOptionPane.showInputDialog("Introduce el sistema operativo donde se ejecutara el plugin");
+            
+            String comando;
+            
+            if (SO.equalsIgnoreCase("Linux")){
+               comando = "javapackager -deploy -native deb -Bcategory=Others -Bicon="+JOptionPane.showInputDialog("Introduce la direccion del icono del plugin")+" -BlicenseType=Propietary -outdir "+JOptionPane.showInputDialog("Introduce la direccion del directorio donde se creara el ejecutable")+" -outfile "+JOptionPane.showInputDialog("Introduce el nombre del ejecutable")+" -srcdir "+JOptionPane.showInputDialog("Introduce la direccion del archivo jar del programa que quieras crear")+" -srcfiles "+JOptionPane.showInputDialog("Introduce el nombre del archivo jar")+" -appclass "+JOptionPane.showInputDialog("Introduce el nombre de la clase principal")+" -name "+JOptionPane.showInputDialog("Introduce el nombre de la aplicacion")+" -title "+JOptionPane.showInputDialog("Introduce el titulo de la aplicacion");
+                
+            }else{
+                comando = "javapackager -deploy -native exe -Bicon="+JOptionPane.showInputDialog("Introduce la direccion del icono del plugin")+" -BlicenseType=Propietary -outdir "+JOptionPane.showInputDialog("Introduce la direccion del directorio donde se creara el ejecutable")+" -outfile "+JOptionPane.showInputDialog("Introduce el nombre del ejecutable")+" -srcdir "+JOptionPane.showInputDialog("Introduce la direccion del archivo jar del programa que quieras crear")+" -srcfiles "+JOptionPane.showInputDialog("Introduce el nombre del archivo jar")+" -appclass "+JOptionPane.showInputDialog("Introduce el nombre de la clase principal")+" -name "+JOptionPane.showInputDialog("Introduce el nombre de la aplicacion")+" -title "+JOptionPane.showInputDialog("Introduce el titulo de la aplicacion");
+            }
+
+            Process pr = rt.exec(comando);
  
             BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
  
@@ -51,7 +64,8 @@ public final class JavaPackagerPlugin implements ActionListener {
  
         } catch(IOException ex) {
             System.out.println(e.toString());
-            ex.printStackTrace();
         }
+        
+        JOptionPane.showMessageDialog(null, "El plugin se ha greado con exito!!");
     }
 }
