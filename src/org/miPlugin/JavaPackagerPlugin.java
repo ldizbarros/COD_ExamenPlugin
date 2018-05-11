@@ -26,6 +26,9 @@ public final class JavaPackagerPlugin implements ActionListener {
 
     /**
      * Funcion actionPerformed donde se llevara a cabo la accion del plugin.
+     * En esta funcion, usando la clase Runtime y Process conseguimos que se ejecute un comando 
+     * en la terminal del sistema operativo en el que estemos. En este caso el javaPackager y 
+     * se crea el ejecutable del programa java que tu eligas
      * @param e 
      */
     @Override
